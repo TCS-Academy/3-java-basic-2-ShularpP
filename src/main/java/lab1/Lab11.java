@@ -10,6 +10,12 @@ public class Lab11 {
     // ถ้า name เป็น null หรือ empty string ก็ให้ throw InvalidNameException
     public static void validateName(String name) throws InvalidNameException {
         // TODO: เช็คว่า name เป็น "XXX", null, หรือ empty string แล้ว throw InvalidNameException
+        if (name == null || name.trim().isEmpty()) {
+            throw new InvalidNameException("Name cannot be null or empty");
+        }
+        if ("XXX".equals(name)) {
+            throw new InvalidNameException("Name cannot be XXX");
+        }
     }
     
     // โจทย์ทำเอง: สร้างเมธอดที่รับค่าจากผู้ใช้และใช้ try-catch จัดการ InputMismatchException
@@ -19,7 +25,14 @@ public class Lab11 {
         // TODO: ใช้ Scanner รับ input จากผู้ใช้
         // TODO: ใช้ try-catch จัดการ InputMismatchException
         // TODO: ถ้าเกิด exception ให้ return -1
-        return 0;
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Please enter a number: ");
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input!. Please enter a valid integer.");
+            return -1;
+        }
     }
     
     // Optional: สร้าง method สำหรับถอนเงินจากบัญชี
@@ -28,7 +41,13 @@ public class Lab11 {
     public static double withdraw(double balance, double amount) throws InsufficientFundsException {
         // TODO: เช็คว่า amount > balance แล้ว throw InsufficientFundsException
         // TODO: ถ้าไม่เกิน ให้ return balance - amount
-        return 0.0;
+        if (amount < 0) {
+            throw new InsufficientFundsException("Withdrawal amount cannot be negative");
+        }   
+        if (amount > balance) {
+            throw new InsufficientFundsException("Insufficient funds: balance = " + balance + ", amount = " + amount);
+        }
+        return balance - amount;
     }
     
     public static void main(String[] args) {
@@ -61,6 +80,20 @@ public class Lab11 {
             System.out.println("This should not print");
         } catch (InvalidNameException e) {
             System.out.println("Caught exception for XXX: " + e.getMessage());
+        }
+        
+        try {
+            validateName(null);
+            System.out.println("✗ This should not print - null should be rejected");
+        } catch (InvalidNameException e) {
+            System.out.println("✓ Caught exception for null: " + e.getMessage());
+        }
+
+        try {
+            validateName("");
+            System.out.println("✗ This should not print - empty should be rejected");
+        } catch (InvalidNameException e) {
+            System.out.println("✓ Caught exception for empty string: " + e.getMessage());
         }
     }
     
