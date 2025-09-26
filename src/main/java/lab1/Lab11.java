@@ -9,7 +9,6 @@ public class Lab11 {
     // โดยถ้า name = "XXX" จะ Throw InvalidNameException ออกมา
     // ถ้า name เป็น null หรือ empty string ก็ให้ throw InvalidNameException
     public static void validateName(String name) throws InvalidNameException {
-        // TODO: เช็คว่า name เป็น "XXX", null, หรือ empty string แล้ว throw InvalidNameException
         if (name == null || name.trim().isEmpty()) {
             throw new InvalidNameException("Name cannot be null or empty");
         }
@@ -22,16 +21,13 @@ public class Lab11 {
     // ให้สร้าง method ที่รับตัวเลข integer จากผู้ใช้ โดยใช้ Scanner
     // ถ้าผู้ใช้ใส่ข้อมูลที่ไม่ใช่ตัวเลข ให้จัดการด้วย try-catch
     public static int getUserInput() {
-        // TODO: ใช้ Scanner รับ input จากผู้ใช้
-        // TODO: ใช้ try-catch จัดการ InputMismatchException
-        // TODO: ถ้าเกิด exception ให้ return -1
         Scanner scanner = new Scanner(System.in);
         try {
             System.out.print("Please enter a number: ");
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Invalid input!. Please enter a valid integer.");
-            return -1;
+            System.out.println("Invalid input! Please enter a valid integer.");
+            return -1; // Return -1 to indicate error
         }
     }
     
@@ -39,16 +35,15 @@ public class Lab11 {
     // ให้สร้าง method withdraw ที่รับพารามิเตอร์ balance และ amount
     // ถ้า amount > balance ให้ throw InsufficientFundsException
     public static double withdraw(double balance, double amount) throws InsufficientFundsException {
-        // TODO: เช็คว่า amount > balance แล้ว throw InsufficientFundsException
-        // TODO: ถ้าไม่เกิน ให้ return balance - amount
         if (amount < 0) {
             throw new InsufficientFundsException("Withdrawal amount cannot be negative");
-        }   
+        }
         if (amount > balance) {
-            throw new InsufficientFundsException("Insufficient funds: balance = " + balance + ", amount = " + amount);
+            throw new InsufficientFundsException("Insufficient funds. Balance: " + balance + ", Requested: " + amount);
         }
         return balance - amount;
     }
+    
     
     public static void main(String[] args) {
         System.out.println("Lab11: Exception Handling");
