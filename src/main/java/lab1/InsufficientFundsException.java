@@ -6,5 +6,6 @@ public class InsufficientFundsException extends Exception {
     // TODO: สร้าง constructor ที่รับ message
     public InsufficientFundsException(String message) {
         // TODO: เรียก super(message)
+        super(message);
     }
 }
